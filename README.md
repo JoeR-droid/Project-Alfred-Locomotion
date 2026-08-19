@@ -95,7 +95,7 @@ Everything else stays within the official `unitree_rl_mjlab` framework.
 
 ## Deployment & Ongoing Work
 
-The final policy is exported as **ONNX** (`policy.onnx` and `policy.onnx.data`) and is ready for the physical Unitree R1 using the built‑in C++ deployment pipeline:
+The final policy is exported as **ONNX** (`policy.onnx` and `policy.onnx.data`) and is ready for the physical Unitree R1 using the built‑in C++ deployment pipeline and will tested once a Unitree R1 comes into my possesion:
 
 ```bash
 cd deploy/robots/r1
