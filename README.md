@@ -7,9 +7,9 @@
 
 This project is a two‑phase journey to make a Unitree R1 humanoid walk not just in simulation, but in the real world.
 
-**Phase 1** was the baseline: we took the official `unitree_rl_mjlab` framework, ran the standard flat‑terrain training on an L40S, and got a reliable walking policy.
+**Phase 1** was the baseline: I took the official `unitree_rl_mjlab` framework, ran the standard flat‑terrain training on an L40S, and got a reliable walking policy.
 
-**Phase 2** pushed further: we added domain randomization (friction, mass, COM offset, sensor noise) and fine‑tuned the baseline policy on an A100, turning a perfect‑simulation walker into one that can handle real‑world variation.
+**Phase 2** pushed further: I added domain randomization (friction, mass, COM offset, sensor noise) and fine‑tuned the baseline policy on an A100, turning a perfect‑simulation walker into one that can handle real‑world variation.
 
 The policy is now exported to ONNX and ready for the physical robot – but **real‑hardware deployment is the ongoing phase**, and that's the next milestone.
 
@@ -17,7 +17,7 @@ The policy is now exported to ONNX and ready for the physical robot – but **re
 
 ## Phase 1: Baseline (No DR)
 
-We started from scratch with the official flat‑terrain config.
+I started from scratch with the official flat‑terrain config.
 
 | **Hardware** | NVIDIA L40S (48 GB VRAM) |
 | :--- | :--- |
@@ -36,7 +36,7 @@ The baseline policy learned to walk forward, turn, and recover from small distur
 
 ## Phase 2: Domain Randomization (DR)
 
-We loaded the **best checkpoint** from Phase 1 and fine‑tuned it on a fresh A100 instance, modifying the environment to inject randomness.
+I loaded the **best checkpoint** from Phase 1 and fine‑tuned it on a fresh A100 instance, modifying the environment to inject randomness.
 
 | **Hardware** | NVIDIA A100 (40 GB VRAM) |
 | :--- | :--- |
@@ -48,7 +48,7 @@ We loaded the **best checkpoint** from Phase 1 and fine‑tuned it on a fresh A1
 | **Fall Rate** | 0% |
 | **Training Time** | ~1 hour (resumed from checkpoint) |
 
-We overrode the `rough` config to keep the terrain flat while injecting DR. The key modifications:
+I overrode the `rough` config to keep the terrain flat while injecting DR. The key modifications:
 
 ### Domain Randomization Parameters
 
@@ -61,7 +61,7 @@ We overrode the `rough` config to keep the terrain flat while injecting DR. The 
 | Random pushes | x/y/z/roll/pitch/yaw | Interval (5–6 s) |
 | Sensor noise (Gaussian) | 0.02 – 0.1 std | Startup |
 
-We also **narrowed the lateral command range** (`lin_vel_y = -0.3..0.3`) and **increased the forward reward weight** from 1.0 to 2.0 to fix an initial side‑walking issue.
+I also **narrowed the lateral command range** (`lin_vel_y = -0.3..0.3`) and **increased the forward reward weight** from 1.0 to 2.0 to fix an initial side‑walking issue.
 
 ---
 
@@ -82,7 +82,7 @@ The DR policy walks forward stably, handles variations in ground friction, mass 
 
 ## Key Code Modifications
 
-The core change lives in `config/env_cfgs.py` – we modified the `unitree_r1_rough_env_cfg` function to:
+The core change lives in `config/env_cfgs.py` – I modified the `unitree_r1_rough_env_cfg` function to:
 
 - Force terrain to `"plane"`.
 - Override friction, COM, and mass ranges.
